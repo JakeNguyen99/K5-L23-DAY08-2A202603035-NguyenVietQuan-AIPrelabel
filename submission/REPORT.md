@@ -6,31 +6,31 @@
 
 | Lớp | Model + cỡ | Ngưỡng | Vì sao (dẫn `run_id` trong `model_log.csv`) |
 |---|---|---|---|
-| person / bicycle / motorbike / car / bus / truck | <<YOLO26m>> | <<theo lớp, từ threshold_sweep>> | <<>> |
-| three_wheeler | <<YOLOE-26s, prompt: ...>> | <<>> | <<>> |
+| person / bicycle / motorbike / car / bus / truck | YOLO26m | person=0.45,motorbike=0.35, bicycle=0.3,truck=0.3,bus=0.3,car=0.3 |  r02, r03|
+| three_wheeler | YOLOE-26s | three_wheeler=0.15 | r04 |
 
-- Lệnh `merge_prelabels.py` đã dùng (dán nguyên): <<>>
-- **Phiên bản SAM bạn chọn** (SAM 1 / 2.1 / 3) và lý do: <<chất lượng mask, tốc độ, RAM, quyền truy cập>>
-- Lỗi nào **không sửa được bằng đổi ngưỡng** (ví dụ tuk-tuk bị gọi `car`)? Sửa thế nào? <<>>
-- Box **điểm cao mà sai** hoặc **điểm thấp mà đúng** (ảnh nào): <<>>
-- Giới hạn: chọn ngưỡng trên chính gold (4 ảnh) nên số đo máy trên gold là lạc quan: <<>>
+- Lệnh `merge_prelabels.py` đã dùng (dán nguyên): python scripts/merge_prelabels.py work/prelabel/yoloe_all/pre.coco.json work/prelabel/y26_all/pre.coco.json --thr "person=0.45,motorbike=0.35,three_wheeler=0.15" --conf 0.3 --iou 0.6 --split "batch,gold" --out work/prelabel/merged_review/pre.coco.json
+- **Phiên bản SAM bạn chọn** (SAM 1 / 2.1 / 3) và lý do: <<chất lượng mask, tốc độ, RAM, quyền truy cập>> SAM 2.1, chất lượng mask tốt, tốc độ 10.13 giây/ảnh, RAM 16gb
+- Lỗi nào **không sửa được bằng đổi ngưỡng** (ví dụ tuk-tuk bị gọi `car`)? Sửa thế nào? Lỗi xe tuk-tuk bị gán `car` hoặc `truck`. Sửa bằng cách dùng model có khả năng nhận diện lớp three_wheeler.
+- Box **điểm cao mà sai** hoặc **điểm thấp mà đúng** (ảnh nào): img_032.jpg, box bicycle 0.7 sai nhưng conf cao
+- Giới hạn: chọn ngưỡng trên chính gold (4 ảnh) nên số đo máy trên gold là lạc quan: Bởi vì 4 ảnh mẫu nhỏ, lớp trong 4 ảnh có ít hoặc không có nên số đo riêng cho lớp đó không đáng tin cậy dẫn đến việc lạc quan khi áp dụng trên dữ liệu mới.
 
 ## 2. AI error profile (từ `qc/review_stats.md`)
 
 | Trạng thái | Số | Tỉ lệ | Mẫu số |
 |---|---|---|---|
-| accepted | <<>> | <<>> | <<box máy>> |
-| edited | <<>> | <<>> | <<>> |
-| deleted | <<>> | <<>> | <<>> |
-| added | <<>> | <<>> | <<đối tượng sau duyệt>> |
+| accepted | 422 | 422/444 = 95.0% | 444 box máy |
+| edited | 2 | 2/444 = 0.5% | 444 box máy |
+| deleted | 18 | 18/444 = 4.1% | 444 box máy |
+| added | 9 | 9/433 = 2.1% | 433 đối tượng sau duyệt |
 
-- Lớp nào máy tệ nhất? Vì sao (dẫn ảnh)? <<>>
-- So với gold: precision / recall của **máy** <<>> (mẫu số: <<đối tượng gold>>)
+- Lớp nào máy tệ nhất? Vì sao (dẫn ảnh)? Lớp Three_wheeler, vì lớp này thường xuyên bị gán lệch, thừa, sai vật thể
+- So với gold: precision / recall của **máy** 60.7% (KTC 95%: 48–72%)/94.9% (KTC 95%: 83–99%)
 
 ## 3. Thiên kiến tự động hóa và ảnh bẫy
 
-- Bắt bẫy: <<.../12>>; loại nào lọt: <<>>; vì sao (bạn đã bỏ bước nào của checklist)? <<>>
-- Accepted cao mà bắt bẫy thấp (hoặc ngược lại) nói gì về cách bạn duyệt? <<>>
+- Bắt bẫy: 8/12; loại nào lọt: loose 1/3, wrong_class 3/3, extra 3/3, missing 1/3; vì sao (bạn đã bỏ bước nào của checklist)? bỏ sót checklist bước 1 và 4
+- Accepted cao mà bắt bẫy thấp (hoặc ngược lại) nói gì về cách bạn duyệt? Cách tôi duyệt vẫn chưa được sát theo checklist.
 
 ## 4. Máy có đáng dùng không?
 
