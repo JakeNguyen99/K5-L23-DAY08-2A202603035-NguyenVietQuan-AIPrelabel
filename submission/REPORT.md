@@ -31,47 +31,53 @@
 
 - Bắt bẫy: 8/12; loại nào lọt: loose 1/3, wrong_class 3/3, extra 3/3, missing 1/3; vì sao (bạn đã bỏ bước nào của checklist)? bỏ sót checklist bước 1 và 4
 - Accepted cao mà bắt bẫy thấp (hoặc ngược lại) nói gì về cách bạn duyệt? Cách tôi duyệt vẫn chưa được sát theo checklist.
+- Re-review: Bắt bẫy: 12/12, loose 3/3, wrong_class 3/3, extra 3/3, missing 3/3
 
 ## 4. Máy có đáng dùng không?
 
-- Thời gian (từ `time_log.csv`): gán tay <<... phút/ảnh>> vs duyệt <<... phút/ảnh>>. Thiên lệch (bạn gán gold trước nên đã quen cảnh): <<>>
-- Kết luận: <<có / không / chỉ cho lớp nào>>, dựa trên <<số liệu>>
+- Thời gian (từ `time_log.csv`): gold_manual = 25p, batch_review = 105p.
+- Số liệu tham chiếu: accepted 422/444 = 95.0%; deleted 18/444 = 4.1%; added 9/433 = 2.1%; bắt bẫy lượt đầu 8/12 = 66.7% (sau re-review 12/12).
+- Kết luận: Có thể dùng pre-label làm điểm khởi đầu, không chấp nhận tự động; vẫn cần review toàn bộ vì lượt đầu bắt bẫy chỉ 8/12 và mẫu QC có lỗi ở 2/5 ảnh.
 - **Ba quy tắc giảm thiên kiến của bạn** (mỗi quy tắc kiểm tra được bằng số hoặc việc làm):
-  1. <<>>
-  2. <<>>
-  3. <<>>
+  1. Ẩn nhãn máy và quét toàn ảnh ít nhất 15 giây trước khi hiện nhãn ở mọi ảnh; mục tiêu thực hiện đủ 24/24 ảnh.
+  2. Với từng ảnh, làm đủ thứ tự: tìm vật bị bỏ sót → xóa box thừa → sửa lớp → chỉnh box lỏng; không bỏ qua bước nào.
+  3. Không dùng confidence để tự động chấp nhận box; kiểm tra lớp và độ ôm sát của từng box bằng ảnh gốc.
 
 ## 5. Mask SAM cho 3 vật (Part 5)
 
 | Ảnh | SAM (phiên bản) | Số click | Mask gồm người lái / hàng hoá? | Lỗi quan sát | File trong `masks/` |
 |---|---|---|---|---|---|
-| <<img_0xx>> | <<>> | <<>> | <<>> | <<>> | <<>> |
+| img_004 | SAM 2.1 | 3 |  | Có chồng lấn lên người | tuktuk_img004_sam2.jpg |
+| img_013 | SAM 1 | 3 | Mask gồm người lái | Có chồng lấn lên người | tuktuk_img013_sam1.jpg |
+| img_013 | SAM 2.1 | 3 | Mask gồm người lái | Có chồng lấn lên người | tuktuk_img013_sam2.jpg |
+| img_017 | SAM 2.1 | 3 |  | Mask không hết phần trần | tuktuk_img017_sam2.jpg |
+
 
 - Đối chiếu guideline mục 4.2: quy tắc nào giúp, quy tắc nào thiếu? <<>>
 - *(Tuỳ chọn)* Interactor SAM trong CVAT: làm được / không (lỗi gì, đã thử gì); khác gì offline: <<>>
 
 ## 6. Calibration (Part 6)
 
-- Số quyết định: <<>> (`calibration_decisions.csv`); quan trọng nhất (dẫn `CAL-xx`): <<>>
-- Quy tắc mới đã vào `guideline_v1.1_calibrated.md`: <<>>
-- Nguyên nhân gốc: <<guideline mơ hồ / chưa nắm quy tắc / máy>>
+- Số quyết định: 4 (`calibration_decisions.csv`, CAL-01–CAL-04); quan trọng nhất: CAL-04, chốt cách gán xe đạp điện/xe máy điện.
+- Quy tắc mới đã vào `guideline_v1.1_calibrated.md`: xe ba bánh có mui vẫn là three_wheeler, xe đạp điện và xe máy điện vẫn là motorbike
+- Nguyên nhân gốc: Guideline không đề cập đến xe đạp điện, xe máy điện, xe ba bánh có mui.
 
 ## 7. QC và quyết định (Part 6)
 
-- Mẫu: <<n>> ảnh (<<m>> ảnh `can_review` + <<k>> ngẫu nhiên, seed 42); người kiểm: bạn (**hạn chế**: bạn vừa là người duyệt).
-- Lỗi theo **đối tượng**: <<.../... = ...%>> · theo **ảnh**: <<.../... = ...%>> (ngưỡng Release ≤ 2%)
-- Top lỗi (trong: bỏ sót, thừa, sai lớp, sai vị trí/kích thước, sai thuộc tính, sai mask) + một ảnh ví dụ mỗi loại: <<>>
-- **Giới hạn mẫu nhỏ** (cận trên 95% trong `qc_report_auto.md`): <<>>
-- Script kiểm được / không kiểm được (ví dụ ôm sát, cùng bỏ sót với máy, theo checklist thật): <<>>
+- Mẫu: 5 ảnh (0 ảnh `can_review` + 5 ảnh ngẫu nhiên, seed 42); 95 đối tượng; người kiểm: bạn (**hạn chế**: bạn vừa là người duyệt).
+- Lỗi theo **đối tượng**: 2/95 = 2.1% · theo **ảnh**: 2/5 = 40.0% (ngưỡng Release ≤ 2%)
+- Top lỗi: `thua` 1 ảnh (`img_003.jpg`); `bo_sot` 1 ảnh (`img_006.jpg`).
+- **Giới hạn mẫu nhỏ** (cận trên 95% trong `qc_report_auto.md`): 77%; mẫu 5 ảnh không đủ chứng minh tỉ lệ lỗi thật đạt ngưỡng 2%.
+- Script kiểm được / không kiểm được: script tổng hợp phiếu QC; không tự xác định box có ôm sát vật, nhãn đúng thực tế, vật cả bạn lẫn máy cùng bỏ sót, hay bạn có theo checklist hay không.
 
-**Quyết định: <<Release / Hold / Rework>>**, ngày <<YYYY-MM-DD>>. Lý do (đi theo Hold → Rework → Release): <<>>
-Nếu Rework / Hold, việc cần làm tiếp: <<>>
+**Quyết định: REWORK**,  Lý do: phiếu QC ghi lỗi ở 2/5 ảnh (40.0%), cao hơn ngưỡng 2%; `qc_report_auto.md` cũng gợi ý Rework. Mẫu nhỏ nên tỷ lệ này còn bất định, nhưng không đủ căn cứ để Release.
+Việc cần làm tiếp: sửa lỗi đã ghi ở `img_003.jpg` và `img_006.jpg`, cập nhật nhãn cuối, rồi chạy lại `build_release.py`, `qc_sample.py --force` và `qc_report.py`; ghi riêng kết quả QC vòng sau.
 
 ## 8. Ghi chú cá nhân
 
-- **Dùng AI để làm bài** (công cụ nào, việc gì, kiểm tra thế nào; "không dùng" nếu không): <<>>
-- Gold có bị nhiễm không (bạn có nhìn pre-label hay hỏi AI trước khi gán xong)? <<không / có, như sau: ...>>
-- Máy / GPU / CVAT dùng; vướng mắc cài đặt: <<>>
-- Dùng cache `data/cache/` thay vì tự chạy? <<không / có, vì ...>>
-- Lỗi / bug script đã gặp (nếu có): <<>>
-- Một điều bạn làm khác lần sau: <<>>
+- **Dùng AI để làm bài** (công cụ nào, việc gì, kiểm tra thế nào; "không dùng" nếu không): Copilot kiểm tra bằng cách đọc lại và sửa lỗi chính tả
+- Gold có bị nhiễm không (bạn có nhìn pre-label hay hỏi AI trước khi gán xong)? không
+- Máy / GPU / CVAT dùng; vướng mắc cài đặt: không
+- Dùng cache `data/cache/` thay vì tự chạy? không
+- Lỗi / bug script đã gặp (nếu có): 
+- Một điều bạn làm khác lần sau: 

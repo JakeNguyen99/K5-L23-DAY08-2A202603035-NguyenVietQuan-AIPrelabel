@@ -4,3 +4,5 @@ r02,2,yolo26-m,--model yolo26 --size m --split pilot --conf 0.25 --out work/prel
 r03,2,yolo26-m,--model yolo26 --size m --split pilot --conf 0.5 --out work/prelabel/t_y26_c05,pilot,139,5,"Gan nhan dung Person, bicycle, motorbike, truck, car",bo sot xe tuk tuk va it box hon,Ha nguong xuong de chong bo sot vat the
 r04,2,yoloe-s,--model yoloe --classes three_wheeler --split pilot --conf 0.25 --out work/prelabel/t_yoloe,pilot,8,1.47,Gan dung xe tuk tuk,Gan thua vao xe truck,"Dung de xac nhan Three_wheeler, co the phai sua box bang tay"
 r05,2,yolo26-m+sam(sam2.1_b.pt),"--model yolo26 --size m --classes person,motorbike,car --images img_004.jpg img_013.jpg --conf 0.3 --segmenter sam --sam sam2.1_b.pt --out work/prelabel/t_sam",custom,16,10.13,Nhan dien Person tot,Nhan dien sai xe tuk tuk thanh car va chong lan len class khac,Dung de tao mask
+r06,5,yolo26-m,--model yolo26 --size m --split all --conf 0.05 --out work/prelabel/y26_all --no-viz,all,1669,2.09,,,
+r07,5,yoloe-s,--model yoloe --classes three_wheeler --split all --conf 0.05 --out work/prelabel/yoloe_all --no-viz,all,125,0.62,,,

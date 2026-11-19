@@ -1,1 +1,5 @@
 case_id,image,nguon,van_de,quyet_dinh,quy_tac_ghi_vao_guideline,phien_ban_guideline
+CAL-01,img_013|img_004,loi_may,YOLO26 g?i tuk-tuk là car,luôn gán three_wheeler,m?c 2: xe ba bánh có mui v?n là three_wheeler,1.1
+CAL-02,img_034|img_023,bay_lot,?? l?t b?y loose,re-review,không thêm quy t?c m?i,1.1
+CAL-03,img_025|img003,bay_lot,?? l?t b?y mising,re-review,không thêm quy t?c m?i,1.1
+CAL-04,img_025|img003,cau_hoi_mo,Xe ??p ?i?n / xe máy ?i?n là `bicycle` hay `motorbike`?,motorbike,c?p nh?t Xe ??p ?i?n / xe máy ?i?n vào l?p motorbike,1.1

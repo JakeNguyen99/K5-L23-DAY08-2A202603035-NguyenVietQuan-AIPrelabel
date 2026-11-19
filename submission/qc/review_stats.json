@@ -64,11 +64,11 @@
  },
  "traps": {
   "n": 12,
-  "caught": 8,
-  "rate": 0.6666666666666666,
+  "caught": 12,
+  "rate": 1.0,
   "by_type": {
    "loose": [
-    1,
+    3,
     3
    ],
    "wrong_class": [
@@ -80,28 +80,11 @@
     3
    ],
    "missing": [
-    1,
+    3,
     3
    ]
   },
-  "missed": [
-   [
-    "img_034.jpg",
-    "loose"
-   ],
-   [
-    "img_025.jpg",
-    "missing"
-   ],
-   [
-    "img_003.jpg",
-    "missing"
-   ],
-   [
-    "img_023.jpg",
-    "loose"
-   ]
-  ]
+  "missed": []
  },
  "accept_threshold": 0.9
 }
