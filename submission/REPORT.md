@@ -10,7 +10,7 @@
 | three_wheeler | YOLOE-26s | three_wheeler=0.15 | r04 |
 
 - Lệnh `merge_prelabels.py` đã dùng (dán nguyên): python scripts/merge_prelabels.py work/prelabel/yoloe_all/pre.coco.json work/prelabel/y26_all/pre.coco.json --thr "person=0.45,motorbike=0.35,three_wheeler=0.15" --conf 0.3 --iou 0.6 --split "batch,gold" --out work/prelabel/merged_review/pre.coco.json
-- **Phiên bản SAM bạn chọn** (SAM 1 / 2.1 / 3) và lý do: <<chất lượng mask, tốc độ, RAM, quyền truy cập>> SAM 2.1, chất lượng mask tốt, tốc độ 10.13 giây/ảnh, RAM 16gb
+- **Phiên bản SAM bạn chọn** (SAM 1 / 2.1 / 3) và lý do: SAM 2.1, chất lượng mask tốt, tốc độ 10.13 giây/ảnh, RAM 16gb
 - Lỗi nào **không sửa được bằng đổi ngưỡng** (ví dụ tuk-tuk bị gọi `car`)? Sửa thế nào? Lỗi xe tuk-tuk bị gán `car` hoặc `truck`. Sửa bằng cách dùng model có khả năng nhận diện lớp three_wheeler.
 - Box **điểm cao mà sai** hoặc **điểm thấp mà đúng** (ảnh nào): img_032.jpg, box bicycle 0.7 sai nhưng conf cao
 - Giới hạn: chọn ngưỡng trên chính gold (4 ảnh) nên số đo máy trên gold là lạc quan: Bởi vì 4 ảnh mẫu nhỏ, lớp trong 4 ảnh có ít hoặc không có nên số đo riêng cho lớp đó không đáng tin cậy dẫn đến việc lạc quan khi áp dụng trên dữ liệu mới.
@@ -53,8 +53,8 @@
 | img_017 | SAM 2.1 | 3 |  | Mask không hết phần trần | tuktuk_img017_sam2.jpg |
 
 
-- Đối chiếu guideline mục 4.2: quy tắc nào giúp, quy tắc nào thiếu? <<>>
-- *(Tuỳ chọn)* Interactor SAM trong CVAT: làm được / không (lỗi gì, đã thử gì); khác gì offline: <<>>
+- Đối chiếu guideline mục 4.2: quy tắc nào giúp, quy tắc nào thiếu?
+- *(Tuỳ chọn)* Interactor SAM trong CVAT: làm được / không (lỗi gì, đã thử gì); khác gì offline: 
 
 ## 6. Calibration (Part 6)
 
