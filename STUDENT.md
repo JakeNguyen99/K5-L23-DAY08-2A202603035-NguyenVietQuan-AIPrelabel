@@ -5,7 +5,7 @@
 - Lớp (L2 / L3 / khác): L2
 - Tài khoản GitHub: JakeNguyen99
 - Repo bài nộp (URL): https://github.com/JakeNguyen99/K5-L23-DAY08-2A202603035-NguyenVietQuan-AIPrelabel
-- Commit chốt bài (hash): 
+- Commit chốt bài (hash): 13fd859edfd9b1aa576057460265db5e205574ac
 - Máy: Window 10, GTX1050
 - CVAT (Docker): v2.7
 
