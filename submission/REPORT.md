@@ -75,7 +75,7 @@ Việc cần làm tiếp: sửa lỗi đã ghi ở `img_003.jpg` và `img_006.jp
 
 ## 8. Ghi chú cá nhân
 
-- **Dùng AI để làm bài** (công cụ nào, việc gì, kiểm tra thế nào; "không dùng" nếu không): Copilot kiểm tra bằng cách đọc lại và sửa lỗi chính tả
+- **Dùng AI để làm bài** (công cụ nào, việc gì, kiểm tra thế nào; "không dùng" nếu không): Copilot kiểm tra bằng cách đọc lại, sửa lỗi chính tả, push file lên github
 - Gold có bị nhiễm không (bạn có nhìn pre-label hay hỏi AI trước khi gán xong)? không
 - Máy / GPU / CVAT dùng; vướng mắc cài đặt: không
 - Dùng cache `data/cache/` thay vì tự chạy? không
